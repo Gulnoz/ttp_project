@@ -3,9 +3,10 @@ import Nav from "../Nav/nav.component";
 
 export const Transactions = props => {
   let transaction = {};
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user) {
-    const { transactions } = user.data.attributes;
+  console.log(props.user)
+  //const user = JSON.parse(props.user);
+  if (props.user) {
+    const { transactions } = props.user.attributes;
     transaction = transactions;
     console.log(transactions);
   }

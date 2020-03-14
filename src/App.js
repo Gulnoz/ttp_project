@@ -62,7 +62,7 @@ class App extends React.Component {
             !this.state.user ? (
               <Redirect to="/login" />
             ) : (
-              <Transactions {...props} />
+                <Transactions user={this.state.user}{...props} />
             )
           }
         />

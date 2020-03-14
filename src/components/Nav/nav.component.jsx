@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import { Button } from "react-bootstrap";
 import './nav.styles.scss';
 
@@ -10,9 +11,9 @@ class Nav extends React.Component {
   render() {
     return (
       <div className="nav-buttons-right"  style={{  }}>
-        <Button variant="outline-dark"  onClick={this.logOutHandler}>Portfolio</Button>
-        <Button variant="outline-dark"  onClick={this.logOutHandler}>Transactions</Button>
-        <Button variant="outline-primary"  onClick={this.logOutHandler}>Log out</Button>
+        <Button variant="outline-dark" as={Link} to="/" >Portfolio</Button>
+        <Button variant="outline-dark" as={Link} to="/Transactions" >Transactions</Button>
+        <Button variant="outline-primary" as={Link} to="/login" onClick={()=>window.localStorage.clear()}>Log out</Button>
       </div>
     );
   }
