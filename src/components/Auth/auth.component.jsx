@@ -41,7 +41,7 @@ class Auth extends React.Component {
           //   users.push(data);
           //   this.setState({ users: users });
         })
-        .catch(alert);
+        .catch();
     };
   }
   render() {
