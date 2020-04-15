@@ -13,8 +13,8 @@ class App extends React.Component {
       user: null
     };
 
-    this.setUser = props => (()=>
-        {},this.setState({ user: props }));
+    this.setUser = props => (
+       this.setState({ user: props }));
   }
   componentWillMount() {
     //console.log('test')
@@ -40,6 +40,11 @@ class App extends React.Component {
       // return <UserContainer onChangeSelectHendler={this.onChangeSelectHendler} handleSubmit={this.handleSubmit} handleChange={this.handleChange} editEventNull={this.editEventNull} updateEventHendler={this.updateEventHendler} ref={this.createEventFormElement} createEventFormState={this.state.createEventFormState} addEventHendler={this.addEventHendler} popUpFavoriteHendler={this.popUpFavoriteHendler} favorits={this.state.favorits} userEvents={this.state.userEvents} currentUser={this.state.currentUser} setCurrentUser={this.setCurrentUser} categories={this.state.categories} setUserEvents={this.setUserEvents} />
     }
   }
+  addStockTransaction=(stock)=>{
+    let user=this.state.user;
+    user.attributes.transactions.push(stock)
+    this.setState({user: user});
+  }
   render() {
     return (
       <Switch>
@@ -50,7 +55,7 @@ class App extends React.Component {
             !this.state.user ? (
               <Redirect to="/login" />
             ) : (
-              <Portfolio user={this.state.user} {...props} />
+                <Portfolio addStockTransaction={this.addStockTransaction}user={this.state.user} {...props} />
             )
           }
         />
