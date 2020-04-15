@@ -11,7 +11,8 @@ class Portfolio extends React.Component {
       portfolio: [],
       errorMessage: "",
       ticker: "",
-      qty: ""
+      qty: "",
+      portfolioTotal: 0,
     };
     this.inputChangeHandler = e => {
       e.preventDefault();
@@ -64,7 +65,11 @@ class Portfolio extends React.Component {
     })
       .then(response => response.json())
       .then(portfolio => {
-        this.setState({ portfolio: portfolio });
+        let sum = portfolio.reduce((a, b) => a.price * a.shares + b.price * b.shares);
+        console.log(sum)
+        this.setState({ portfolio: portfolio,
+                        portfolioTotal: sum
+        });
       });
   }
   render() {
@@ -104,7 +109,7 @@ class Portfolio extends React.Component {
               </tr>
               <tr style={{ border: "none" }}>
                 <td>
-                  <h1>Portfolio()</h1>
+                  <h1>Portfolio(${this.state.portfolioTotal})</h1>
                   <table className="table table-hover">
                     <tbody>
                       {this.state.portfolio.map(item => {
