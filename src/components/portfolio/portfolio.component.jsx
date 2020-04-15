@@ -34,27 +34,29 @@ class Portfolio extends React.Component {
         .then(response => response.json())
         .then(responsePortfolio => {
           console.log(responsePortfolio);
-
+          if (!responsePortfolio.error){
+          this.props.addStockTransaction(responsePortfolio);
           let { portfolio } = this.state;
           portfolio.push(responsePortfolio);
 
           var result = [];
           portfolio.reduce(function(res, value) {
             if (!res[value.ticker]) {
-              res[value.ticker] = { ticker: value.ticker, shares: 0, price: 0 };
+              res[value.ticker] = { ticker: value.ticker, qty: 0, price: 0 };
               result.push(res[value.ticker]);
             }
-            res[value.ticker].shares += value.shares;
+            res[value.ticker].qty += value.qty;
             res[value.ticker].price += value.price;
             return res;
           }, {});
 
           this.setState({ portfolio: result });
-        });
+        }});
     };
   }
   componentDidMount() {
     const { id, attributes } = this.props.user;
+    
     console.log(this.props.user);
 
     const { balance } = attributes;
@@ -65,11 +67,13 @@ class Portfolio extends React.Component {
     })
       .then(response => response.json())
       .then(portfolio => {
-        let sum = portfolio.reduce((a, b) => a.price * a.shares + b.price * b.shares);
+        let sum = portfolio.reduce((a, b) => a.price * a.qty + b.price * b.qty);
+        
         console.log(sum)
         this.setState({ portfolio: portfolio,
                         portfolioTotal: sum
         });
+        
       });
   }
   render() {
@@ -118,7 +122,7 @@ class Portfolio extends React.Component {
                             <td style={{ border: "none" }}>{item.ticker}</td>
                             <td style={{ border: "none" }}>
                               {" "}
-                              - {item.shares} Shares
+                              - {item.qty} Shares
                             </td>
                             <td style={{ border: "none" }}>${item.price}</td>
                           </tr>
